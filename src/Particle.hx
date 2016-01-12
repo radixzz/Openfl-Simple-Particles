@@ -12,7 +12,7 @@ import Utils;
 class Particle
 {
 	public static var TWO_PI = Math.PI * 2;
-	public static var COLORS = [0xC8FF00, 0xFA023C, 0x0069FF, 0xFFAA00, 0xAA00FF, 0xAA00FF];
+	public static var COLORS = [0x7E5686, 0xA5AAD9, 0xE8F9A2, 0xF8A13F, 0xBA3C3D, 0x33AEA4];
 	
 	private var wander: Float;
 	private var theta: Float;

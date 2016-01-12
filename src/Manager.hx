@@ -1,10 +1,9 @@
 package;
+import haxe.Timer;
 import flash.geom.Rectangle;
 import openfl.display.Graphics;
-import openfl.display.Bitmap;
 import openfl.display.BitmapData;
 import openfl.display.Sprite;
-import haxe.Timer;
 import openfl.display.Tilesheet;
 /**
  * ...
@@ -14,6 +13,7 @@ class Manager extends Sprite
 {	
 	public static inline var TILE_FIELDS = 7;
 	public static inline var MAX_PARTICLES = 10000;
+	public static inline var MAX_PARTICLE_SIZE = 64;
 	private var particles: Array<Particle>;
 	private var pool: Array<Particle>;
 	private var prevTime = 0.0;
@@ -29,25 +29,26 @@ class Manager extends Sprite
 	}
 	
 	private function createShapesTileSheet() {
-		var bmd = new BitmapData(128, 128, true, 0x00FFFFFF);
+		var bmd = new BitmapData(MAX_PARTICLE_SIZE, MAX_PARTICLE_SIZE, true, 0x00FFFFFF);
 		tilesheet = new Tilesheet(bmd);
 		bmd.draw(getCircleSprite());
-		tilesheet.addTileRect(new Rectangle(0, 0, 128, 128));
+		tilesheet.addTileRect(new Rectangle(0, 0, MAX_PARTICLE_SIZE, MAX_PARTICLE_SIZE));
 	}
 		
 	private function getCircleSprite(): Sprite {
 		var tmpSprite = new Sprite();
+		var halfSize = Std.int(MAX_PARTICLE_SIZE / 2);
 		tmpSprite.graphics.clear();
 		tmpSprite.graphics.beginFill(0xFFFFFF);
-		tmpSprite.graphics.drawCircle(64, 64, 64);
+		tmpSprite.graphics.drawCircle(halfSize, halfSize, halfSize - 2);
 		tmpSprite.graphics.endFill();
 		return tmpSprite;
 	}
 	
 	public function emit(x: Float, y: Float) {
 		for (i in 0...25) {
-			var xStart = x + Math.random() * 100;
-			var yStart = y + Math.random() * 100;		
+			var xStart = x + Math.random() * 45;
+			var yStart = y + Math.random() * 45;		
 			spawn(xStart, yStart);	
 		}
 	}
@@ -59,7 +60,7 @@ class Manager extends Sprite
 		
 		var p = pool.length > 0 ? pool.pop() : new Particle();
 		particles.push(p);
-		p.init(x, y, Utils.rnd(5, 40));
+		p.init(x, y, Utils.rnd(10, MAX_PARTICLE_SIZE));
 	}
 	
 	public function draw() {
@@ -82,7 +83,7 @@ class Manager extends Sprite
 			tileData[index + 0] = p.position.x;
 			tileData[index + 1] = p.position.y;
 			tileData[index + 2] = 0;
-			tileData[index + 3] = p.radius / 64;
+			tileData[index + 3] = p.radius / MAX_PARTICLE_SIZE;
 			tileData[index + 4] = p.color.r;
 			tileData[index + 5] = p.color.g;
 			tileData[index + 6] = p.color.b;
