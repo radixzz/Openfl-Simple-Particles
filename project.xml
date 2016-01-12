@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	<!-- NMML reference: https://gist.github.com/1763850 -->
+	
+	<!-- metadata, make sure 'package' is at least 3 segments (ie. com.mycompany.myproject) -->
+	<meta title="Particles" package="Particles" version="1.0.0" company="Ivan Juarez" />
+	
+	<!-- output -->
+	<app main="Main" file="Particles" path="bin" />
+	
+	<window background="#000000" fps="60" hardware="true" />
+	<window width="0" height="0" if="dom || mobile" />
+	<window width="800" height="480" unless="dom || mobile" />
+	<window orientation="landscape" vsync="false" antialiasing="1" if="cpp" />
+	<window fullscreen="true" />
+	
+	<!-- classpath, haxe libs -->
+	<source path="src" />
+	<haxelib name="openfl" />
+	<haxelib name="actuate" />
+	
+	<!-- assets -->
+	<icon path="assets/openfl.svg" />
+	<assets path="assets/img" rename="img" />
+	
+	<app swf-version="11.8" />
+	
+	<!-- optimize output
+	<haxeflag name="-dce full" /> -->
+	
+</project>
